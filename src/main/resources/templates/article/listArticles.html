@@ -44,14 +44,13 @@ MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="a
 									   <div th:switch="${article.provider}" class="container my-5">
 									   
 									   
-									   	<div th:case="null">
+									   	<div th:case="null">No Articles yet!
 
 									   	</div>
 									   		<div th:case="*">
 						
 									   	<td th:text="${article.provider.name}"></td>
 
-									   </div>
 									   </div>
 									   </div>
 										<td><a th:href="@{/article/show/{id}(id=${article.id})}"

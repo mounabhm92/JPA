@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -39,12 +40,12 @@ public class ArticleController {
 
 	@GetMapping("list")
 	public String listArticles(Model model) {
-		// model.addAttribute("articles", null);
-		List<Article> LA = (List<Article>) articleRepository.findAll();
-		if (LA.size() == 0) 
-			LA = null;
+		 model.addAttribute("articles", articleRepository.findAll());
+		//List<Article> LA = (List<Article>) articleRepository.findAll();
+//		if (LA.size() == 0) 
+//			LA = null;
 		
-		model.addAttribute("articles", LA);
+		//model.addAttribute("articles", LA);
 		return "article/listArticles";
 	}
 
@@ -65,11 +66,12 @@ public class ArticleController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
 		article.setProvider(provider);
 
-/// part upload
-
 		StringBuilder fileName = new StringBuilder();
 		MultipartFile file = files[0];
-		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+		// affecté le temps actuel java 8
+		LocalDateTime ldt = LocalDateTime.now();
+		String finalName = file.getOriginalFilename() + ldt.toString();
+		Path fileNameAndPath = Paths.get(uploadDirectory,file.getOriginalFilename());
 
 		fileName.append(file.getOriginalFilename());
 		try {
